@@ -1,0 +1,127 @@
+---
+title: "Correlations for Educational Attainment and Walking Preferences"
+author: "Felix A. Baez Santiago"
+date: '2022-06-28'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readxl)
+library(tidyverse)
+
+df <- read_excel("q7cq11eData.xlsx")
+glimpse(df)
+```
+
+```{r}
+## Trees and Shade
+ggplot(df, aes(`Trees and Shade`, `Educational Score`, color = Town)) + 
+  geom_point() + labs(title = "Educational Attainment and Trees and Shade", 
+                      x = "Preference for Trees and Shade when walking (1-5)") +
+  geom_smooth(method=lm, se=FALSE) + 
+  theme_bw()
+```
+
+```{r}
+## Lightning
+ggplot(df, aes(Lighting, `Educational Score`, color = Town)) + 
+  geom_point() + labs(title = "Educational Attainment and Lighting", 
+                      x = "Preference for Lighting when walking (1-5)") +
+  geom_smooth(method=lm, se=FALSE) + 
+  theme_bw()
+```
+
+```{r}
+ggplot(df, aes(`Places to Stop` , `Educational Score`, color = Town)) + 
+  geom_point() + labs(title = "Educational Attainment and Places to Stop", 
+                      x = "Preference for Places to Stop when walking (1-5)") +
+  geom_smooth(method=lm, se=FALSE) + 
+  theme_bw()
+```
+
+```{r}
+ggplot(df, aes(`Well Kept Surroundings` , `Educational Score`, color = Town)) + 
+  geom_point() + labs(title = "Educational Attainment and Well Kept Surroundings", 
+                      x = "Preference for Well Kept Surroundings when walking (1-5)") +
+  geom_smooth(method=lm, se=FALSE) + 
+  theme_bw()
+```
+
+```{r}
+ggplot(df, aes(`Pet Facilities`, `Educational Score`, color = Town)) + 
+  geom_point() + labs(title = "Educational Attainment and Pet Facilities", 
+                      x = "Preference for Pet Facilities when walking") +
+  geom_smooth(method=lm, se=FALSE) + 
+  theme_bw()
+```
+
+```{r}
+ggplot(df, aes(`Stop Signs`, `Educational Score`, color = Town)) + 
+  geom_point() + labs(title = "Educational Attainment and Stop Signs", 
+                      x = "Preference for stop signs when walking") +
+  geom_smooth(method=lm, se=FALSE) + 
+  theme_bw()
+```
+
+```{r}
+ggplot(df, aes(Restrooms, `Educational Score`, color = Town)) + 
+  geom_point() + labs(title = "Educational Attainment and Restrooms", 
+                      x = "Preference for Restrooms when walking") +
+  geom_smooth(method=lm, se=FALSE) 
+```
+
+```{r}
+ggplot(df, aes(`Natural Areas`, `Educational Score`, color = Town)) + 
+  geom_point() + labs(title = "Educational Attainment and Natural areas", 
+                      x = "Preference for natural areas when walking") +
+  geom_smooth(method=lm, se=FALSE) + 
+  theme_bw()
+```
+make graph that shows all correlations for factors 
+Adisak said make a pairplot
+```{r}
+cor(df$`Trees and Shade`, df$`Educational Score`)
+cor(df$Lighting, df$`Educational Score`)
+cor(df$`Places to Stop`, df$`Educational Score`)
+cor(df$`Well Kept Surroundings`, df$`Educational Score`)
+cor(df$`Pet Facilities`, df$`Educational Score`)
+cor(df$`Stop Signs`, df$`Educational Score`)
+cor(df$Restrooms, df$`Educational Score`)
+cor(df$`Natural Areas`, df$`Educational Score`)
+cor(df$Countryside, df$`Educational Score`)
+cor(df$Sidewalks, df$`Educational Score`)
+cor(df$Trails, df$`Educational Score`)
+cor(df$Birds, df$`Educational Score`)
+cor(df$`Curb Ramps`, df$`Educational Score`)
+cor(df$`Seasonal Beauty`, df$`Educational Score`)
+cor(df$`Walk Other`, df$`Educational Score`)
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
