@@ -14,6 +14,7 @@ library(readxl)
 library(tidyverse)
 
 df <- read_excel("q7cq11eData.xlsx")
+
 glimpse(df)
 ```
 
@@ -102,12 +103,99 @@ cor(df$`Walk Other`, df$`Educational Score`)
 ```
 
 ```{r}
-
+cor(marital$Single, trail_factors$`Trees & Shade`)
+cor(marital$Single, trail_factors$Lighting)
+cor(marital$Single, trail_factors$`Places to Stop`)
+cor(marital$Single, trail_factors$`Well Kept Surroundings`)
+cor(marital$Single, trail_factors$`Pet Facilities`)
+cor(marital$Single, trail_factors$`Vehicular Traffic`)
+cor(marital$Single, trail_factors$Restrooms)
+cor(marital$Single, trail_factors$`Natural Areas`)
+cor(marital$Single, trail_factors$Countryside)
+cor(marital$Single, trail_factors$Trails)
+cor(marital$Single, trail_factors$Business)
+cor(marital$Single, trail_factors$Downtown)
+cor(marital$Single, trail_factors$Birds)
+cor(marital$Single, trail_factors$`Seasonal Beauty`)
+cor(marital$Single, trail_factors$`Trail Length`)
+cor(marital$Single, trail_factors$Other)
 ```
 
 ```{r}
-
+cor(marital$`Divorced/Separated`, trail_factors$`Trees & Shade`)
+cor(marital$`Divorced/Separated`, trail_factors$Lighting)
+cor(marital$`Divorced/Separated`, trail_factors$`Places to Stop`)
+cor(marital$`Divorced/Separated`, trail_factors$`Well Kept Surroundings`)
+cor(marital$`Divorced/Separated`, trail_factors$`Pet Facilities`)
+cor(marital$`Divorced/Separated`, trail_factors$`Vehicular Traffic`)
+cor(marital$`Divorced/Separated`, trail_factors$Restrooms)
+cor(marital$`Divorced/Separated`, trail_factors$`Natural Areas`)
+cor(marital$`Divorced/Separated`, trail_factors$Countryside)
+cor(marital$`Divorced/Separated`, trail_factors$Trails)
+cor(marital$`Divorced/Separated`, trail_factors$Business)
+cor(marital$`Divorced/Separated`, trail_factors$Downtown)
+cor(marital$`Divorced/Separated`, trail_factors$Birds)
+cor(marital$`Divorced/Separated`, trail_factors$`Seasonal Beauty`)
+cor(marital$`Divorced/Separated`, trail_factors$`Trail Length`)
+cor(marital$`Divorced/Separated`, trail_factors$Other)
 ```
+```{r}
+cor(marital$`Married or living as married`, trail_factors$`Trees & Shade`)
+cor(marital$`Married or living as married`, trail_factors$Lighting)
+cor(marital$`Married or living as married`, trail_factors$`Places to Stop`)
+cor(marital$`Married or living as married`, trail_factors$`Well Kept Surroundings`)
+cor(marital$`Married or living as married`, trail_factors$`Pet Facilities`)
+cor(marital$`Married or living as married`, trail_factors$`Vehicular Traffic`)
+cor(marital$`Married or living as married`, trail_factors$Restrooms)
+cor(marital$`Married or living as married`, trail_factors$`Natural Areas`)
+cor(marital$`Married or living as married`, trail_factors$Countryside)
+cor(marital$`Married or living as married`, trail_factors$Trails)
+cor(marital$`Married or living as married`, trail_factors$Business)
+cor(marital$`Married or living as married`, trail_factors$Downtown)
+cor(marital$`Married or living as married`, trail_factors$Birds)
+cor(marital$`Married or living as married`, trail_factors$`Seasonal Beauty`)
+cor(marital$`Married or living as married`, trail_factors$`Trail Length`)
+cor(marital$`Married or living as married`, trail_factors$Other)
+```
+```{r}
+cor(marital$Widowed, trail_factors$`Trees & Shade`)
+cor(marital$Widowed, trail_factors$Lighting)
+cor(marital$Widowed, trail_factors$`Places to Stop`)
+cor(marital$Widowed, trail_factors$`Well Kept Surroundings`)
+cor(marital$Widowed, trail_factors$`Pet Facilities`)
+cor(marital$Widowed, trail_factors$`Vehicular Traffic`)
+cor(marital$Widowed, trail_factors$Restrooms)
+cor(marital$Widowed, trail_factors$`Natural Areas`)
+cor(marital$Widowed, trail_factors$Countryside)
+cor(marital$Widowed, trail_factors$Trails)
+cor(marital$Widowed, trail_factors$Business)
+cor(marital$Widowed, trail_factors$Downtown)
+cor(marital$Widowed, trail_factors$Birds)
+cor(marital$Widowed, trail_factors$`Seasonal Beauty`)
+cor(marital$Widowed, trail_factors$`Trail Length`)
+cor(marital$Widowed, trail_factors$Other)
+```
+-0.2329978
+-0.1798412
+0.2185157
+0.01958203
+-0.174976
+-0.07473103
+-0.2999831
+0.1919658
+0.1750734
+-0.235263
+0.164006
+0.1767465
+0.3710533
+0.3693376
+0.3146976
+0.09581774
+
+
+
+
+
 
 
 

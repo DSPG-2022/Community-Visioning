@@ -1,0 +1,192 @@
+library(readxl)
+library(tidyverse)
+
+walk_educ <- read_excel("R/Felix/q7cq11eData.xlsx", 2)
+age_or <- read_excel("R/Xingrui/Age.xlsx")
+
+walk <- walk_educ %>%
+  select(Town, `Trees and Shade`:`Walk Other`) %>%
+  arrange(Town)
+final_df <- age_or %>%
+  select(Town = City, `Mean Age`) %>%
+  arrange(Town) %>%
+  filter(!is.na(`Mean Age`)) %>%
+  inner_join(walk)
+final_df
+cor(final_df$`Mean Age`, final_df$`Trees and Shade`)
+cor(final_df$`Mean Age`, final_df$Lighting)
+cor(final_df$`Mean Age`, final_df$`Places to Stop`)
+cor(final_df$`Mean Age`, final_df$`Well Kept Surroundings`)
+cor(final_df$`Mean Age`, final_df$`Pet Facilities`)
+cor(final_df$`Mean Age`, final_df$`Stop Signs`)
+cor(final_df$`Mean Age`, final_df$Restrooms)
+cor(final_df$`Mean Age`, final_df$`Natural Areas`)
+cor(final_df$`Mean Age`, final_df$Countryside)
+cor(final_df$`Mean Age`, final_df$Sidewalks)
+cor(final_df$`Mean Age`, final_df$Trails)
+cor(final_df$`Mean Age`, final_df$Birds)
+cor(final_df$`Mean Age`, final_df$`Curb Ramps`)
+cor(final_df$`Mean Age`, final_df$`Seasonal Beauty`)
+cor(final_df$`Mean Age`, final_df$`Walk Other`)
+
+#######
+walk_factors <- read_excel("R/Felix/q7cq11eData.xlsx", 3)
+marital <- read_excel("R/Xingrui/Marital status.xlsx")
+
+walk_factors <- arrange(walk_factors, Town)
+marital <- marital %>%
+  arrange(City) %>%
+  rename(Town = City)
+walk_factors$`Trees and Shade`
+walk_factors
+
+cor(marital$Single, walk_factors$`Trees and Shade`)
+cor(marital$Single, walk_factors$Lighting)
+cor(marital$Single, walk_factors$`Places to Stop`)
+cor(marital$Single, walk_factors$`Well Kept Surroundings`)
+cor(marital$Single, walk_factors$`Pet Facilities`)
+cor(marital$Single, walk_factors$`Stop Signs`)
+cor(marital$Single, walk_factors$Restrooms)
+cor(marital$Single, walk_factors$`Natural Areas`)
+cor(marital$Single, walk_factors$Countryside)
+cor(marital$Single, walk_factors$Sidewalks)
+cor(marital$Single, walk_factors$Trails)
+cor(marital$Single, walk_factors$Birds)
+cor(marital$Single, walk_factors$`Curb Ramps`)
+cor(marital$Single, walk_factors$`Seasonal Beauty`)
+cor(marital$Single, walk_factors$`Walk Other`)
+cor(marital$Single, walk_factors$`Educational Score`)
+
+cor(marital$`Divorced/Separated`, walk_factors$`Trees and Shade`)
+cor(marital$`Divorced/Separated`, walk_factors$Lighting)
+cor(marital$`Divorced/Separated`, walk_factors$`Places to Stop`)
+cor(marital$`Divorced/Separated`, walk_factors$`Well Kept Surroundings`)
+cor(marital$`Divorced/Separated`, walk_factors$`Pet Facilities`)
+cor(marital$`Divorced/Separated`, walk_factors$`Stop Signs`)
+cor(marital$`Divorced/Separated`, walk_factors$Restrooms)
+cor(marital$`Divorced/Separated`, walk_factors$`Natural Areas`)
+cor(marital$`Divorced/Separated`, walk_factors$Countryside)
+cor(marital$`Divorced/Separated`, walk_factors$Sidewalks)
+cor(marital$`Divorced/Separated`, walk_factors$Trails)
+cor(marital$`Divorced/Separated`, walk_factors$Birds)
+cor(marital$`Divorced/Separated`, walk_factors$`Curb Ramps`)
+cor(marital$`Divorced/Separated`, walk_factors$`Seasonal Beauty`)
+cor(marital$`Divorced/Separated`, walk_factors$`Walk Other`)
+cor(marital$`Divorced/Separated`, walk_factors$`Educational Score`)
+
+cor(marital$`Married or living as married`, walk_factors$`Trees and Shade`)
+cor(marital$`Married or living as married`, walk_factors$Lighting)
+cor(marital$`Married or living as married`, walk_factors$`Places to Stop`)
+cor(marital$`Married or living as married`, walk_factors$`Well Kept Surroundings`)
+cor(marital$`Married or living as married`, walk_factors$`Pet Facilities`)
+cor(marital$`Married or living as married`, walk_factors$`Stop Signs`)
+cor(marital$`Married or living as married`, walk_factors$Restrooms)
+cor(marital$`Married or living as married`, walk_factors$`Natural Areas`)
+cor(marital$`Married or living as married`, walk_factors$Countryside)
+cor(marital$`Married or living as married`, walk_factors$Sidewalks)
+cor(marital$`Married or living as married`, walk_factors$Trails)
+cor(marital$`Married or living as married`, walk_factors$Birds)
+cor(marital$`Married or living as married`, walk_factors$`Curb Ramps`)
+cor(marital$`Married or living as married`, walk_factors$`Seasonal Beauty`)
+cor(marital$`Married or living as married`, walk_factors$`Walk Other`)
+cor(marital$`Married or living as married`, walk_factors$`Educational Score`)
+
+cor(marital$Widowed, walk_factors$`Trees and Shade`)
+cor(marital$Widowed, walk_factors$Lighting)
+cor(marital$Widowed, walk_factors$`Places to Stop`)
+cor(marital$Widowed, walk_factors$`Well Kept Surroundings`)
+cor(marital$Widowed, walk_factors$`Pet Facilities`)
+cor(marital$Widowed, walk_factors$`Stop Signs`)
+cor(marital$Widowed, walk_factors$Restrooms)
+cor(marital$Widowed, walk_factors$`Natural Areas`)
+cor(marital$Widowed, walk_factors$Countryside)
+cor(marital$Widowed, walk_factors$Sidewalks)
+cor(marital$Widowed, walk_factors$Trails)
+cor(marital$Widowed, walk_factors$Birds)
+cor(marital$Widowed, walk_factors$`Curb Ramps`)
+cor(marital$Widowed, walk_factors$`Seasonal Beauty`)
+cor(marital$Widowed, walk_factors$`Walk Other`)
+cor(marital$Widowed, walk_factors$`Educational Score`)
+
+######
+trail_factors <- read_excel("R/Felix/q7cq11eData.xlsx", 2)
+trail_factors <- arrange(trail_factors, Town)
+
+cor(marital$Single, trail_factors$`Trees & Shade`)
+cor(marital$Single, trail_factors$Lighting)
+cor(marital$Single, trail_factors$`Places to Stop`)
+cor(marital$Single, trail_factors$`Well Kept Surroundings`)
+cor(marital$Single, trail_factors$`Pet Facilities`)
+cor(marital$Single, trail_factors$`Vehicular Traffic`)
+cor(marital$Single, trail_factors$Restrooms)
+cor(marital$Single, trail_factors$`Natural Areas`)
+cor(marital$Single, trail_factors$Countryside)
+cor(marital$Single, trail_factors$Trails)
+cor(marital$Single, trail_factors$Business)
+cor(marital$Single, trail_factors$Downtown)
+cor(marital$Single, trail_factors$Birds)
+cor(marital$Single, trail_factors$`Seasonal Beauty`)
+cor(marital$Single, trail_factors$`Trail Length`)
+cor(marital$Single, trail_factors$Other)
+
+cor(marital$`Divorced/Separated`, trail_factors$`Trees & Shade`)
+cor(marital$`Divorced/Separated`, trail_factors$Lighting)
+cor(marital$`Divorced/Separated`, trail_factors$`Places to Stop`)
+cor(marital$`Divorced/Separated`, trail_factors$`Well Kept Surroundings`)
+cor(marital$`Divorced/Separated`, trail_factors$`Pet Facilities`)
+cor(marital$`Divorced/Separated`, trail_factors$`Vehicular Traffic`)
+cor(marital$`Divorced/Separated`, trail_factors$Restrooms)
+cor(marital$`Divorced/Separated`, trail_factors$`Natural Areas`)
+cor(marital$`Divorced/Separated`, trail_factors$Countryside)
+cor(marital$`Divorced/Separated`, trail_factors$Trails)
+cor(marital$`Divorced/Separated`, trail_factors$Business)
+cor(marital$`Divorced/Separated`, trail_factors$Downtown)
+cor(marital$`Divorced/Separated`, trail_factors$Birds)
+cor(marital$`Divorced/Separated`, trail_factors$`Seasonal Beauty`)
+cor(marital$`Divorced/Separated`, trail_factors$`Trail Length`)
+cor(marital$`Divorced/Separated`, trail_factors$Other)
+
+cor(marital$`Married or living as married`, trail_factors$`Trees & Shade`)
+cor(marital$`Married or living as married`, trail_factors$Lighting)
+cor(marital$`Married or living as married`, trail_factors$`Places to Stop`)
+cor(marital$`Married or living as married`, trail_factors$`Well Kept Surroundings`)
+cor(marital$`Married or living as married`, trail_factors$`Pet Facilities`)
+cor(marital$`Married or living as married`, trail_factors$`Vehicular Traffic`)
+cor(marital$`Married or living as married`, trail_factors$Restrooms)
+cor(marital$`Married or living as married`, trail_factors$`Natural Areas`)
+cor(marital$`Married or living as married`, trail_factors$Countryside)
+cor(marital$`Married or living as married`, trail_factors$Trails)
+cor(marital$`Married or living as married`, trail_factors$Business)
+cor(marital$`Married or living as married`, trail_factors$Downtown)
+cor(marital$`Married or living as married`, trail_factors$Birds)
+cor(marital$`Married or living as married`, trail_factors$`Seasonal Beauty`)
+cor(marital$`Married or living as married`, trail_factors$`Trail Length`)
+cor(marital$`Married or living as married`, trail_factors$Other)
+
+cor(marital$Widowed, trail_factors$`Trees & Shade`)
+cor(marital$Widowed, trail_factors$Lighting)
+cor(marital$Widowed, trail_factors$`Places to Stop`)
+cor(marital$Widowed, trail_factors$`Well Kept Surroundings`)
+cor(marital$Widowed, trail_factors$`Pet Facilities`)
+cor(marital$Widowed, trail_factors$`Vehicular Traffic`)
+cor(marital$Widowed, trail_factors$Restrooms)
+cor(marital$Widowed, trail_factors$`Natural Areas`)
+cor(marital$Widowed, trail_factors$Countryside)
+cor(marital$Widowed, trail_factors$Trails)
+cor(marital$Widowed, trail_factors$Business)
+cor(marital$Widowed, trail_factors$Downtown)
+cor(marital$Widowed, trail_factors$Birds)
+cor(marital$Widowed, trail_factors$`Seasonal Beauty`)
+cor(marital$Widowed, trail_factors$`Trail Length`)
+cor(marital$Widowed, trail_factors$Other)
+
+
+
+
+
+
+
+
+
+
+

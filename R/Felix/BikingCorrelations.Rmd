@@ -1,0 +1,178 @@
+---
+title: "Biking Correlations"
+author: "Felix A. Baez Santiago"
+date: '2022-07-12'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(tidyverse)
+```
+
+```{r}
+hhmem <- read_excel("biking.xlsx", sheet = "HouseHoldMembers") %>% arrange(City)
+bikedata <- read_excel("biking.xlsx", sheet = "Bike8bData") %>% arrange(Town)
+income <- read_excel("biking.xlsx", sheet = "Income") %>% arrange(Cities)
+age <- read_excel("biking.xlsx", sheet = "Age") %>% arrange(City)
+marital <- read_excel("biking.xlsx", sheet = "Marital Status") %>% arrange(City)
+biking_complete <- read_excel("biking.xlsx", sheet = "BikeTrails") %>%arrange(Cities)
+```
+
+Correlations between biking habits and Mean Income
+```{r}
+cor(bikedata$`Get to Work`, bikedata$MeanIncome)
+cor(bikedata$`For Exercise`, bikedata$MeanIncome)
+cor(bikedata$`For Enjoyment`, bikedata$MeanIncome)
+cor(bikedata$`For Basic Needs`, bikedata$MeanIncome)
+```
+Correlations between biking habits and Household size
+```{r}
+cor(bikedata$`Get to Work`, bikedata$`HH Size`)
+cor(bikedata$`For Exercise`, bikedata$`HH Size`)
+cor(bikedata$`For Enjoyment`, bikedata$`HH Size`)
+cor(bikedata$`For Basic Needs`, bikedata$`HH Size`)
+```
+Correlations between biking habits and single marital status
+```{r}
+cor(marital$Single, bikedata$`Get to Work`)
+cor(marital$Single, bikedata$`For Exercise`)
+cor(marital$Single, bikedata$`For Enjoyment`)
+cor(marital$Single, bikedata$`For Basic Needs`)
+```
+Correlations between biking habits and divorced marital status
+```{r}
+cor(marital$`Divorced/Separated`, bikedata$`Get to Work`)
+cor(marital$`Divorced/Separated`, bikedata$`For Exercise`)
+cor(marital$`Divorced/Separated`, bikedata$`For Enjoyment`)
+cor(marital$`Divorced/Separated`, bikedata$`For Basic Needs`)
+```
+Correlations between biking habits and married marital status
+```{r}
+cor(marital$`Married or living as married`, bikedata$`Get to Work`)
+cor(marital$`Married or living as married`, bikedata$`For Exercise`)
+cor(marital$`Married or living as married`, bikedata$`For Enjoyment`)
+cor(marital$`Married or living as married`, bikedata$`For Basic Needs`)
+```
+Correlations between biking habits and widowed marital status
+```{r}
+cor(marital$Widowed, bikedata$`Get to Work`)
+cor(marital$Widowed, bikedata$`For Exercise`)
+cor(marital$Widowed, bikedata$`For Enjoyment`)
+cor(marital$Widowed, bikedata$`For Basic Needs`)
+```
+Correlations between biking habits and age
+```{r}
+cor(age$`Mean Age`, bikedata$`Get to Work`)
+cor(age$`Mean Age`, bikedata$`For Exercise`)
+cor(age$`Mean Age`, bikedata$`For Enjoyment`)
+cor(age$`Mean Age`, bikedata$`For Basic Needs`)
+```
+
+Correlations between bike trail preferences and biking habits
+```{r}
+cor(biking_complete$Trees, bikedata$`Get to Work`)
+cor(biking_complete$Trees, bikedata$`For Exercise`)
+cor(biking_complete$Trees, bikedata$`For Enjoyment`)
+cor(biking_complete$Trees, bikedata$`For Basic Needs`)
+```
+
+```{r}
+cor(biking_complete$light, bikedata$`Get to Work`)
+cor(biking_complete$light, bikedata$`For Exercise`)
+cor(biking_complete$light, bikedata$`For Enjoyment`)
+cor(biking_complete$light, bikedata$`For Basic Needs`)
+```
+
+```{r}
+cor(biking_complete$sit, bikedata$`Get to Work`)
+cor(biking_complete$sit, bikedata$`For Exercise`)
+cor(biking_complete$sit, bikedata$`For Enjoyment`)
+cor(biking_complete$sit, bikedata$`For Basic Needs`)
+```
+
+```{r}
+cor(biking_complete$`well kept`, bikedata$`Get to Work`)
+cor(biking_complete$`well kept`, bikedata$`For Exercise`)
+cor(biking_complete$`well kept`, bikedata$`For Enjoyment`)
+cor(biking_complete$`well kept`, bikedata$`For Basic Needs`)
+```
+
+```{r}
+cor(biking_complete$bike, bikedata$`Get to Work`)
+cor(biking_complete$bike, bikedata$`For Exercise`)
+cor(biking_complete$bike, bikedata$`For Enjoyment`)
+cor(biking_complete$bike, bikedata$`For Basic Needs`)
+```
+
+```{r}
+cor(biking_complete$stop, bikedata$`Get to Work`)
+cor(biking_complete$stop, bikedata$`For Exercise`)
+cor(biking_complete$stop, bikedata$`For Enjoyment`)
+cor(biking_complete$stop, bikedata$`For Basic Needs`)
+```
+
+```{r}
+cor(biking_complete$rest, bikedata$`Get to Work`)
+cor(biking_complete$rest, bikedata$`For Exercise`)
+cor(biking_complete$rest, bikedata$`For Enjoyment`)
+cor(biking_complete$rest, bikedata$`For Basic Needs`)
+```
+
+```{r}
+cor(biking_complete$business, bikedata$`Get to Work`)
+cor(biking_complete$business, bikedata$`For Exercise`)
+cor(biking_complete$business, bikedata$`For Enjoyment`)
+cor(biking_complete$business, bikedata$`For Basic Needs`)
+```
+
+```{r}
+cor(biking_complete$nature, bikedata$`Get to Work`)
+cor(biking_complete$nature, bikedata$`For Exercise`)
+cor(biking_complete$nature, bikedata$`For Enjoyment`)
+cor(biking_complete$nature, bikedata$`For Basic Needs`)
+```
+
+```{r}
+cor(biking_complete$Countryside, bikedata$`Get to Work`)
+cor(biking_complete$Countryside, bikedata$`For Exercise`)
+cor(biking_complete$Countryside, bikedata$`For Enjoyment`)
+cor(biking_complete$Countryside, bikedata$`For Basic Needs`)
+```
+
+```{r}
+cor(biking_complete$trail, bikedata$`Get to Work`)
+cor(biking_complete$trail, bikedata$`For Exercise`)
+cor(biking_complete$trail, bikedata$`For Enjoyment`)
+cor(biking_complete$trail, bikedata$`For Basic Needs`)
+```
+
+```{r}
+cor(biking_complete$bird, bikedata$`Get to Work`)
+cor(biking_complete$bird, bikedata$`For Exercise`)
+cor(biking_complete$bird, bikedata$`For Enjoyment`)
+cor(biking_complete$bird, bikedata$`For Basic Needs`)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
