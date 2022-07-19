@@ -27,6 +27,10 @@ cor(bikedata$`For Exercise`, bikedata$MeanIncome)
 cor(bikedata$`For Enjoyment`, bikedata$MeanIncome)
 cor(bikedata$`For Basic Needs`, bikedata$MeanIncome)
 ```
+0.1340277
+0.3217055
+0.4515306
+-0.01408556
 Correlations between biking habits and Household size
 ```{r}
 cor(bikedata$`Get to Work`, bikedata$`HH Size`)
@@ -34,6 +38,10 @@ cor(bikedata$`For Exercise`, bikedata$`HH Size`)
 cor(bikedata$`For Enjoyment`, bikedata$`HH Size`)
 cor(bikedata$`For Basic Needs`, bikedata$`HH Size`)
 ```
+-0.05152124
+0.04111465
+-0.04578838
+0.2105496
 Correlations between biking habits and single marital status
 ```{r}
 cor(marital$Single, bikedata$`Get to Work`)
@@ -41,6 +49,10 @@ cor(marital$Single, bikedata$`For Exercise`)
 cor(marital$Single, bikedata$`For Enjoyment`)
 cor(marital$Single, bikedata$`For Basic Needs`)
 ```
+0.2212685
+0.07930735
+0.3037017
+0.4365965
 Correlations between biking habits and divorced marital status
 ```{r}
 cor(marital$`Divorced/Separated`, bikedata$`Get to Work`)
@@ -48,6 +60,10 @@ cor(marital$`Divorced/Separated`, bikedata$`For Exercise`)
 cor(marital$`Divorced/Separated`, bikedata$`For Enjoyment`)
 cor(marital$`Divorced/Separated`, bikedata$`For Basic Needs`)
 ```
+0.4052648
+0.0104096
+0.05856581
+-0.2419803
 Correlations between biking habits and married marital status
 ```{r}
 cor(marital$`Married or living as married`, bikedata$`Get to Work`)
@@ -55,6 +71,10 @@ cor(marital$`Married or living as married`, bikedata$`For Exercise`)
 cor(marital$`Married or living as married`, bikedata$`For Enjoyment`)
 cor(marital$`Married or living as married`, bikedata$`For Basic Needs`)
 ```
+-0.39027
+-0.03683036
+-0.2439611
+-0.1152611
 Correlations between biking habits and widowed marital status
 ```{r}
 cor(marital$Widowed, bikedata$`Get to Work`)
@@ -62,6 +82,10 @@ cor(marital$Widowed, bikedata$`For Exercise`)
 cor(marital$Widowed, bikedata$`For Enjoyment`)
 cor(marital$Widowed, bikedata$`For Basic Needs`)
 ```
+0.2398713
+0.01217716
+0.2219662
+0.1750913
 Correlations between biking habits and age
 ```{r}
 cor(age$`Mean Age`, bikedata$`Get to Work`)
@@ -69,7 +93,10 @@ cor(age$`Mean Age`, bikedata$`For Exercise`)
 cor(age$`Mean Age`, bikedata$`For Enjoyment`)
 cor(age$`Mean Age`, bikedata$`For Basic Needs`)
 ```
-
+0.2228982
+0.06029007
+0.1499271
+0.08225028
 Correlations between bike trail preferences and biking habits
 ```{r}
 cor(biking_complete$Trees, bikedata$`Get to Work`)
@@ -77,84 +104,120 @@ cor(biking_complete$Trees, bikedata$`For Exercise`)
 cor(biking_complete$Trees, bikedata$`For Enjoyment`)
 cor(biking_complete$Trees, bikedata$`For Basic Needs`)
 ```
-
+-0.3343898
+0.06398206
+0.1069677
+0.1333669
 ```{r}
 cor(biking_complete$light, bikedata$`Get to Work`)
 cor(biking_complete$light, bikedata$`For Exercise`)
 cor(biking_complete$light, bikedata$`For Enjoyment`)
 cor(biking_complete$light, bikedata$`For Basic Needs`)
 ```
-
+-0.1643146
+0.06963945
+0.008650896
+0.229224
 ```{r}
 cor(biking_complete$sit, bikedata$`Get to Work`)
 cor(biking_complete$sit, bikedata$`For Exercise`)
 cor(biking_complete$sit, bikedata$`For Enjoyment`)
 cor(biking_complete$sit, bikedata$`For Basic Needs`)
 ```
-
+0.06383537
+0.06394473
+0.2502892
+-0.0290712
 ```{r}
 cor(biking_complete$`well kept`, bikedata$`Get to Work`)
 cor(biking_complete$`well kept`, bikedata$`For Exercise`)
 cor(biking_complete$`well kept`, bikedata$`For Enjoyment`)
 cor(biking_complete$`well kept`, bikedata$`For Basic Needs`)
 ```
-
+-0.2296765
+0.2089254
+0.1101076
+0.2379067
 ```{r}
 cor(biking_complete$bike, bikedata$`Get to Work`)
 cor(biking_complete$bike, bikedata$`For Exercise`)
 cor(biking_complete$bike, bikedata$`For Enjoyment`)
 cor(biking_complete$bike, bikedata$`For Basic Needs`)
 ```
-
+0.1520621
+0.07939742
+0.2027569
+0.1415885
 ```{r}
 cor(biking_complete$stop, bikedata$`Get to Work`)
 cor(biking_complete$stop, bikedata$`For Exercise`)
 cor(biking_complete$stop, bikedata$`For Enjoyment`)
 cor(biking_complete$stop, bikedata$`For Basic Needs`)
 ```
-
+0.08304388
+0.2720578
+0.2057022
+0.1911731
 ```{r}
 cor(biking_complete$rest, bikedata$`Get to Work`)
 cor(biking_complete$rest, bikedata$`For Exercise`)
 cor(biking_complete$rest, bikedata$`For Enjoyment`)
 cor(biking_complete$rest, bikedata$`For Basic Needs`)
 ```
-
+-0.1631422
+0.1565275
+0.1594873
+-0.04802635
 ```{r}
 cor(biking_complete$business, bikedata$`Get to Work`)
 cor(biking_complete$business, bikedata$`For Exercise`)
 cor(biking_complete$business, bikedata$`For Enjoyment`)
 cor(biking_complete$business, bikedata$`For Basic Needs`)
 ```
-
+0.308335
+-0.05263546
+0.1280462
+0.3352066
 ```{r}
 cor(biking_complete$nature, bikedata$`Get to Work`)
 cor(biking_complete$nature, bikedata$`For Exercise`)
 cor(biking_complete$nature, bikedata$`For Enjoyment`)
 cor(biking_complete$nature, bikedata$`For Basic Needs`)
 ```
-
+0.1104077
+-0.07094732
+0.2618759
+-0.01588026
 ```{r}
 cor(biking_complete$Countryside, bikedata$`Get to Work`)
 cor(biking_complete$Countryside, bikedata$`For Exercise`)
 cor(biking_complete$Countryside, bikedata$`For Enjoyment`)
 cor(biking_complete$Countryside, bikedata$`For Basic Needs`)
 ```
-
+0.2267602
+-0.1296485
+0.04357034
+-0.03686961
 ```{r}
 cor(biking_complete$trail, bikedata$`Get to Work`)
 cor(biking_complete$trail, bikedata$`For Exercise`)
 cor(biking_complete$trail, bikedata$`For Enjoyment`)
 cor(biking_complete$trail, bikedata$`For Basic Needs`)
 ```
-
+-0.09166087
+-0.1277117
+0.01474238
+0.06823977
 ```{r}
 cor(biking_complete$bird, bikedata$`Get to Work`)
 cor(biking_complete$bird, bikedata$`For Exercise`)
 cor(biking_complete$bird, bikedata$`For Enjoyment`)
 cor(biking_complete$bird, bikedata$`For Basic Needs`)
 ```
-
+0.1063735
+-0.04321706
+0.2346582
+-0.2050788
 
 
 
