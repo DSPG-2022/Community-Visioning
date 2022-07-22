@@ -3,7 +3,7 @@ library(ggwordcloud)
 library(readxl)
 library(udpipe)
 library(textrank)
-model <- udpipe_download_model(language = "english")
+#model <- udpipe_download_model(language = "english")
 collocation <- function(data, titl = "No title provided", udmodel, word_type = "NOUN",
                         top_n = 25){
   require(udpipe)
@@ -33,3 +33,23 @@ collocation <- function(data, titl = "No title provided", udmodel, word_type = "
           theme(legend.position = "none") +
           labs(title = titl))
 }
+
+### Farragut
+farragut <- read_excel(file.choose())
+glimpse(farragut)
+
+# Farragut Challenges
+collocation(farragut$...14, titl = "Farragut Challenges", udmodel = model, 
+            word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
+
+# Farragut benefits
+collocation(farragut$...15, titl = "Farragut Benefits", udmodel = model, 
+            word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
+
+### Farragut Suggestions
+collocation(farragut$...16, titl = "Farragut Suggestions", udmodel = model, 
+            word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
+
+### 
+logan <- read_excel(file.choose())
+
