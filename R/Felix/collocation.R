@@ -4,6 +4,24 @@ library(readxl)
 library(udpipe)
 library(textrank)
 #model <- udpipe_download_model(language = "english")
+word_frequency <- function(data, titl = "No title provided", udmodel, word_type = "NOUN",
+                           top_n = 25) {
+  require(udpipe)
+  require(tidyverse)
+  require(ggwordcloud)
+  ud_model <- udpipe_load_model(udmodel$file_model)
+  x <- as.data.frame(udpipe_annotate(ud_model, x = tolower(data)))
+  stats <- x %>% filter(upos %in% word_type)
+  stats <- txt_freq(x = stats$lemma)
+  stats$key <- factor(stats$key, levels = rev(stats$key))
+  stats <- head(stats, top_n)
+  print(ggplot(stats, aes(label = key, size = freq, color = factor(sample.int(10, nrow(stats), replace = TRUE)))) +
+          geom_text_wordcloud_area() +
+          ggtitle(titl) +
+          scale_size_area(max_size = 24) +
+          theme(plot.title = element_text(hjust = 0.5)) +
+          theme_minimal())
+}
 collocation <- function(data, titl = "No title provided", udmodel, word_type = "NOUN",
                         top_n = 25){
   require(udpipe)
@@ -50,6 +68,39 @@ collocation(farragut$...15, titl = "Farragut Benefits", udmodel = model,
 collocation(farragut$...16, titl = "Farragut Suggestions", udmodel = model, 
             word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
 
-### 
+### logan 
 logan <- read_excel(file.choose())
+# logan Challenges
+collocation(logan$...14, titl = "Logan Challenges", udmodel = model, 
+            word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
+
+# logan benefits
+collocation(logan$...15, titl = "Logan Benefits", udmodel = model, 
+            word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
+
+### logan Suggestions
+collocation(logan$...16, titl = "Logan Suggestions", udmodel = model, 
+            word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
+
+### shellrock
+shellrock <- read_excel(file.choose())
+# shellrock Challenges
+collocation(logan$...14, titl = "Shell Rock Challenges", udmodel = model, 
+            word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
+
+# shellrock benefits
+collocation(shellrock$...15, titl = "Shell Rock Benefits", udmodel = model, 
+            word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
+
+### shellrock Suggestions
+collocation(shellrock$...16, titl = "Shell Rock Suggestions", udmodel = model, 
+            word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
+
+
+#### algona older adults
+algona <- read_csv(file.choose())
+collocation(algona$`4      To begin our discussion of`, titl = "Algona Discussion", udmodel = model, 
+            word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
+word_frequency(algona$`4      To begin our discussion of`, titl = "Algona Discussion", udmodel = model, 
+            word_type = c("NOUN", "ADJ", "VERB"),top_n = 50)
 
