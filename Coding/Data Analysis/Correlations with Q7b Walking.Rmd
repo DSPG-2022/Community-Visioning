@@ -1,0 +1,81 @@
+---
+title: "Correlations with Q7b Walking"
+author: "Xingrui Xue"
+date: '2022-07-12'
+output: html_document
+---
+
+```{r}
+library(openxlsx)
+library(tidyverse)
+```
+
+Correlation between walking and mean age
+```{r}
+Age <- read.xlsx("Q7b Why and how often do you walk.xlsx", sheet = "Mean Age")
+
+x1 <- Age[, 3:6]
+y1 <- Age[, 7]
+
+R1 <- as.data.frame(cor(x1, y1))
+
+R1 <- mutate(R1, Walking = names(Age[, 3:6]), .before = "V1")
+
+openxlsx::write.xlsx(R1, "R between Q7b and mean age.xlsx")
+```
+
+Correlation between walking and education attainment
+```{r}
+Education <- read.xlsx("Q7b Why and how often do you walk.xlsx", sheet = "Education")
+
+x2 <- Education[, 3:6]
+y2 <- Education[, 7]
+
+R2 <- as.data.frame(cor(x2, y2))
+
+R2 <- mutate(R2, Walking = names(Education[, 3:6]), .before = "V1")
+
+openxlsx::write.xlsx(R2, "R between Q7b and educational attainment.xlsx")
+```
+
+Correlation between walking and income level
+```{r}
+IncomeLevel <- read.xlsx("Q7b Why and how often do you walk.xlsx", sheet = "Income Level")
+  
+x3 <- IncomeLevel[, 3:6]
+y3 <- IncomeLevel[, 7]
+
+R3 <- as.data.frame(cor(x3, y3))
+
+R3 <- mutate(R3, Walking = names(IncomeLevel[, 3:6]), .before = "V1")
+
+openxlsx::write.xlsx(R3, "R between Q7b and Income Level.xlsx")
+```
+
+* Correlation between walking and marital status
+```{r}
+MaritalStatus <- read.xlsx("Q7b Why and how often do you walk.xlsx", sheet = "Marital Status")
+
+x4 <- MaritalStatus[, 3:6]
+y4 <- MaritalStatus[, 7:10]
+
+R4 <- as.data.frame(cor(x4, y4))
+
+R4 <- mutate(R4, Factors = names(MaritalStatus[, 3:6]), .before = "Single")
+
+openxlsx::write.xlsx(R4, "R between Q7b and marital status.xlsx")
+```
+
+Correlation between walking and household size
+```{r}
+Household <- read.xlsx("Q7b Why and how often do you walk.xlsx", sheet = "Household")
+
+x5 <- Household[, 3:6]
+y5 <- IncomeLevel[, 7]
+
+R5 <- as.data.frame(cor(x5, y5))
+
+R5 <- mutate(R5, Walking = names(Household[, 3:6]), .before = "V1")
+
+openxlsx::write.xlsx(R5, "R between Q7b and household size.xlsx")
+```
