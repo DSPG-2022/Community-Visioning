@@ -1,3 +1,0 @@
-This folder includes all coding that has been used to clean survey, census, focus group data.
-# Naming: Cleaned_*Type_*Name
-Type can be Survey, Census, FocusGroup,...
