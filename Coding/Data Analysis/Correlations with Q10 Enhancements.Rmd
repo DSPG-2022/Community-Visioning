@@ -1,0 +1,80 @@
+---
+title: "Correlations with Q10 Enhancements"
+author: "Xingrui Xue"
+date: '2022-06-30'
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+* Correlation between the enhancements and mean age
+```{r}
+Age <- readxl::read_xlsx("Q10 Indicate the importance of each of the following enhancements or imporvements to your community.xlsx", sheet = "Age")
+
+x1 <- Age[, 3:12]
+y1 <- Age[, 13]
+
+R1 <- as.data.frame(cor(x1, y1))
+
+R1 <- mutate(R1, Factors = names(Age[, 3:12]), .before = "Mean Age")
+
+openxlsx::write.xlsx(R1, "R between Q10 and mean age.xlsx")
+```
+
+* Correlation between the enhancements and education
+```{r}
+Education <- readxl::read_xlsx("Q10 Indicate the importance of each of the following enhancements or imporvements to your community.xlsx", sheet = "Education")
+
+x2 <- Education[, 3:12]
+y2 <- Education[, 13]
+
+R2 <- as.data.frame(cor(x2, y2))
+
+R2 <- mutate(R2, Factors = names(Education[, 3:12]), .before = "Educational Score")
+
+openxlsx::write.xlsx(R2, "R between Q10 and education.xlsx")
+```
+
+* Correlation between the enhancements and marital status
+```{r}
+MaritalStatus <- readxl::read_xlsx("Q10 Indicate the importance of each of the following enhancements or imporvements to your community.xlsx", sheet = "Marital Status")
+
+x3 <- MaritalStatus[, 3:12]
+y3 <- MaritalStatus[, 13:16]
+
+R3 <- as.data.frame(cor(x3, y3))
+
+R3 <- mutate(R3, Factors = names(MaritalStatus[, 3:12]), .before = "Single")
+
+openxlsx::write.xlsx(R3, "R between Q10 and marital status.xlsx")
+```
+
+Correlation between the enhancements and household size
+```{r}
+Household <- readxl::read_xlsx("Q10 Indicate the importance of each of the following enhancements or imporvements to your community.xlsx", sheet = "Household")
+
+x4 <- Household[, 3:12]
+y4 <- Household[, 13]
+
+R4 <- as.data.frame(cor(x4, y4))
+
+R4 <- mutate(R4, Factors = names(Household[, 3:12]), .before = "Household Size")
+
+openxlsx::write.xlsx(R4, "R between Q10 and household size.xlsx")
+```
+
+Correlation between the enhancements and income level
+```{r}
+IncomeLevel <- readxl::read_xlsx("Q10 Indicate the importance of each of the following enhancements or imporvements to your community.xlsx", sheet = "Income Level")
+
+x5 <- IncomeLevel[, 3:12]
+y5 <- IncomeLevel[, 13]
+
+R5 <- as.data.frame(cor(x5, y5))
+
+R5 <- mutate(R5, Factors = names(IncomeLevel[, 3:12]), .before = "Weighted Income")
+
+openxlsx::write.xlsx(R5, "R between Q10 and income level.xlsx")
+```

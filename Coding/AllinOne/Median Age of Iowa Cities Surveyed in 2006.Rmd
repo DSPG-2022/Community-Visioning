@@ -1,0 +1,45 @@
+```{r}
+library(tidycensus)
+library(tidyverse)
+```
+
+```{r}
+var <- load_variables(2020, "acs5", cache = TRUE)
+
+city <- c("Algona city, Iowa", "Aplington city, Iowa", "Auburn city, Iowa", "Elma city, Iowa", "Galva city, Iowa", "Lime Springs city, Iowa", "Lone Tree city, Iowa", "Northwood city, Iowa", "Readlyn city, Iowa", "West Okoboji city, Iowa", "West Point city, Iowa", "West Union city, Iowa")
+```
+
+```{r}
+# iaAgeCity <- get_acs(state = "IA",
+#         geography = "place",
+#         variables = c(Total = "B01002_001",
+#                       Male = "B01001_002",
+#                       Female = "B01001_003"))
+
+iaAgeCity <- get_acs(state = "IA",
+        geography = "place",
+        variables = c(Total = "B01002_001"))
+
+iaAgeCity <- rename(iaAgeCity, City = NAME)
+iaAgeCity <- iaAgeCity %>%
+  filter(City %in% city) %>%
+  mutate(City = gsub(" city, Iowa", "", City))
+
+# write.csv(iaAgeCity, "iaAgeCity.csv")
+```
+
+```{r}
+ggplot(iaAgeCity, aes(x = City, weight = estimate)) +
+  geom_bar() +
+  labs(title = "Median Age of Iowa Cities Surveyed in 2006",
+       subtitle = "2015-2020 American Community Survey",
+       x = "City",
+       y = "Age") +
+  geom_errorbar(aes(ymin = estimate - moe,
+                    ymax = estimate + moe,
+                    width = 0.4)) +
+  geom_text(aes(y = estimate,
+                label = estimate,
+                hjust = 4)) +
+  coord_flip()
+```

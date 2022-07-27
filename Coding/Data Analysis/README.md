@@ -1,0 +1,3 @@
+This folder includes all codes of analyzing data.
+# Naming: *AnalysiType_*Name
+THe analysis type can be sentiment, correlation,... 

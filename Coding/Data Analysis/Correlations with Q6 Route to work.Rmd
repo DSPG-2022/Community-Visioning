@@ -1,0 +1,94 @@
+---
+title: "Correlations with Q6 Route to work"
+author: "Xingrui Xue"
+date: '2022-06-28'
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+* Correlations between the route to work factors and age
+```{r}
+Age <- readxl::read_xlsx("Q6 How important are the following factors when choosing your route(s) to work.xlsx", sheet = "Age")
+
+# Mean age
+x1 <- Age[, 3:8]
+y1 <- Age[, 10]
+
+R1 <- as.data.frame(cor(x1, y1))
+
+R1 <- mutate(R1, Factors = names(Age[, 3:8]), .before = "Mean Age (Survey)")
+
+openxlsx::write.xlsx(R1, "R between Q6 and mean age.xlsx")
+
+# Median age
+# x2 <- Age[, 3:8]
+# y2 <- Age[, 11]
+# 
+# R2 <- cor(x2, y2)
+```
+
+Correlations between the route to work factors and education
+```{r}
+Education <- readxl::read_xlsx("Q6 How important are the following factors when choosing your route(s) to work.xlsx", sheet = "Education")
+
+# cor(Education$`Time to destination`, Education$`Educational Score`)
+# cor(Education$`Avoiding neighborhoods` , Education$`Educational Score`)
+# cor(Education$Traffic , Education$`Educational Score`)
+# cor(Education$`Scenic views` , Education$`Educational Score`)
+# cor(Education$`Seasonal beauty` , Education$`Educational Score`)
+# cor(Education$Weather , Education$`Educational Score`)
+
+x3 <- Education[, 3:8]
+y3 <- Education[, 10]
+
+R3 <- as.data.frame(cor(x3, y3))
+
+R3 <- mutate(R3, Factors = names(Education[, 3:8]), .before = "Educational Score")
+
+openxlsx::write.xlsx(R3, "R between Q6 and education attainment.xlsx")
+```
+
+* Correlations between the route to work factors and marital status
+```{r}
+MaritalStatus <- readxl::read_xlsx("Q6 How important are the following factors when choosing your route(s) to work.xlsx", sheet = "Marital Status")
+
+x4 <- MaritalStatus[, 3:8]
+y4 <- MaritalStatus[, 10:13]
+
+R4 <- as.data.frame(cor(x4, y4))
+
+R4 <- mutate(R4, Factors = names(MaritalStatus[, 3:8]), .before = Single)
+
+openxlsx::write.xlsx(R4, "R between Q6 and marital status.xlsx")
+```
+
+Correlations between the route to work factors and household size
+```{r}
+Household <- readxl::read_xlsx("Q6 How important are the following factors when choosing your route(s) to work.xlsx", sheet = "Household")
+
+x5 <- Household[, 3:8]
+y5 <- Household[, 10]
+
+R5 <- as.data.frame(cor(x5, y5))
+
+R5 <- mutate(R5, Factors = names(Household[, 3:8]), .before = "Household Size")
+
+openxlsx::write.xlsx(R5, "R between Q6 and household size.xlsx")
+```
+
+Correlations between the route to work factors and income level
+```{r}
+IncomeLevel <- readxl::read_xlsx("Q6 How important are the following factors when choosing your route(s) to work.xlsx", sheet = "Income Level")
+
+x6 <- IncomeLevel[, 3:8]
+y6 <- IncomeLevel[, 10]
+
+R6 <- as.data.frame(cor(x6, y6))
+
+R6 <- mutate(R6, Factors = names(IncomeLevel[, 3:8]), .before = "Weighted Income")
+
+openxlsx::write.xlsx(R6, "R between Q6 and income level.xlsx")
+```
