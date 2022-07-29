@@ -1,0 +1,43 @@
+---
+title: "Income and Walking Correlations"
+author: "Felix A. Baez Santiago"
+date: '2022-07-28'
+output: html_document
+---
+
+```{r}
+library(readxl)
+library(tidyverse)
+income <- read_excel(file.choose(), sheet = "Income")
+walking <- read_excel(file.choose(), sheet = "WalkScores") 
+```
+
+```{r}
+walking <- walking %>%
+  arrange(Town) %>%
+  select(`Trees & Shade`:Other)
+
+income <- income %>%
+  arrange(Cities) %>% 
+  select(Income = `Mean Income`)
+```
+
+```{r}
+cor(income$Income, walking$`Trees & Shade`)
+cor(income$Income, walking$Lighting)
+cor(income$Income, walking$`Places to Stop`)
+cor(income$Income, walking$`Well Kept Surroundings`)
+cor(income$Income, walking$`Pet Facilities`)
+cor(income$Income, walking$`Vehicular Traffic`)
+cor(income$Income, walking$Restrooms)
+cor(income$Income, walking$`Natural Areas`)
+cor(income$Income, walking$Countryside)
+cor(income$Income, walking$Trails)
+cor(income$Income, walking$Business)
+cor(income$Income, walking$Downtown)
+cor(income$Income, walking$Birds)
+cor(income$Income, walking$`Seasonal Beauty`)
+cor(income$Income, walking$`Trail Length`)
+cor(income$Income, walking$Other)
+names(walking)
+```
