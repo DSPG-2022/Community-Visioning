@@ -1,0 +1,603 @@
+---
+title: "Sentiment Analysis for 2022 Parents"
+author: "Xingrui Xue"
+output: html_document
+---
+
+```{r include=FALSE}
+library(readxl)
+library(tm)
+library(ggplot2)
+library(tidyverse)
+library(tidytext)
+```
+
+1. Algona Parents  
+```{r echo=FALSE, message=FALSE}
+###
+AlgonaParents <- read.delim("Algona Parents 2-26-22.txt")
+AlgonaParents <- gsub('[[:digit:]]+', '', AlgonaParents$X1)
+AlgonaParents <- as.data.frame(AlgonaParents)
+AlgonaParents <- summarise(AlgonaParents, Transcrip = paste(AlgonaParents, collapse = ""))
+
+# sapply(str_extract_all(AlgonaParents$Transcrip, "\\b[A-Z]+\\b"), paste, collapse= ' ')
+AlgonaParents <- gsub("FEMALE", "Female", AlgonaParents)
+AlgonaParents <- gsub("MALE", "Male", AlgonaParents)
+
+AlgonaParents <- gsub("(?=(FACILITATOR|Female SPEAKER|Male SPEAKER))", "@ ", AlgonaParents, perl = TRUE)
+
+matches <- gregexpr("@.[^@]*", AlgonaParents)
+AlgonaParents <- regmatches(AlgonaParents, matches)
+AlgonaParents <- unlist(AlgonaParents)
+
+AlgonaParents <- data.frame(Role = str_extract(AlgonaParents, "@.*[a-z|A-Z].*:"), Transcript = str_extract(AlgonaParents, ":.*[a-z|A-Z].*") )
+
+AlgonaParents$Role <- gsub("@ ", "", AlgonaParents$Role)
+AlgonaParents$Role <- gsub(":", "", AlgonaParents$Role)
+AlgonaParents$Transcript <- gsub(":  ", "", AlgonaParents$Transcript)
+AlgonaParents$Transcript <- stripWhitespace(AlgonaParents$Transcript)
+
+###
+tidy_AlgonaParents <- AlgonaParents %>%
+  # filter(Role != "FACILITATOR") %>%
+  mutate(ID = row_number()) %>%
+  unnest_tokens(word, Transcript) %>%
+  anti_join(stop_words)
+
+###
+sentiment_AlgonaParents <- tidy_AlgonaParents %>%
+  inner_join(get_sentiments("nrc"))
+
+sentiment_AlgonaParents2 <- sentiment_AlgonaParents %>%
+  count(sentiment) %>%
+  arrange(desc(n))
+
+# sentiment_AlgonaParents2 <- sentiment_AlgonaParents %>%
+#   filter(sentiment %in% c("positive", "negative"))
+
+word_counts <- sentiment_AlgonaParents %>%
+  count(word, sentiment) %>%
+  group_by(sentiment) %>%
+  # top_n(10, n) %>%
+  ungroup() %>%
+  mutate(word2 = fct_reorder(word, n))
+
+ggplot(word_counts, aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Sentiment Word Counts",
+       subtitle = "2022 Algona Parents",
+       x = "Words") +
+  theme_classic()
+```
+
+2.  Aplington Parents  
+```{r echo=FALSE, message=FALSE}
+###
+AplingtonParents <- read.delim("Aplington parents.txt")
+# AplingtonParents <- gsub('[[:digit:]]+', '', AplingtonParents$X1)
+AplingtonParents <- as.data.frame(AplingtonParents)
+AplingtonParents <- summarise(AplingtonParents, Transcrip = paste(AplingtonParents, collapse = ""))
+
+# sapply(str_extract_all(AplingtonParents$Transcrip, "\\b[A-Z]+\\b"), paste, collapse= ' ')
+AplingtonParents <- gsub("FEMALE", "Female", AplingtonParents)
+AplingtonParents <- gsub("MALE", "Male", AplingtonParents)
+
+AplingtonParents <- gsub("(?=(THE FACILITATOR|Female PARTICIPANT|Male PARTICIPANT))", "@ ", AplingtonParents, perl = TRUE)
+
+matches <- gregexpr("@.[^@]*", AplingtonParents)
+AplingtonParents <- regmatches(AplingtonParents, matches)
+AplingtonParents <- unlist(AplingtonParents)
+
+AplingtonParents <- data.frame(Role = str_extract(AplingtonParents, "@.*[a-z|A-Z].*:"), Transcript = str_extract(AplingtonParents, ":.*[a-z|A-Z].*") )
+
+AplingtonParents$Role <- gsub("@ ", "", AplingtonParents$Role)
+AplingtonParents$Role <- gsub(":", "", AplingtonParents$Role)
+AplingtonParents$Transcript <- gsub(":  ", "", AplingtonParents$Transcript)
+AplingtonParents$Transcript <- stripWhitespace(AplingtonParents$Transcript)
+
+###
+tidy_AplingtonParents <- AplingtonParents %>%
+  # filter(Role != "FACILITATOR") %>%
+  mutate(ID = row_number()) %>%
+  unnest_tokens(word, Transcript) %>%
+  anti_join(stop_words)
+
+###
+sentiment_AplingtonParents <- tidy_AplingtonParents %>%
+  inner_join(get_sentiments("nrc"))
+
+sentiment_AplingtonParents2 <- sentiment_AplingtonParents %>%
+  count(sentiment) %>%
+  arrange(desc(n))
+
+# sentiment_AplingtonParents2 <- sentiment_AplingtonParents %>%
+#   filter(sentiment %in% c("positive", "negative"))
+
+word_counts <- sentiment_AplingtonParents %>%
+  count(word, sentiment) %>%
+  group_by(sentiment) %>%
+  # top_n(10, n) %>%
+  ungroup() %>%
+  mutate(word2 = fct_reorder(word, n))
+
+ggplot(word_counts, aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Sentiment Word Counts",
+       subtitle = "2022 Aplington Parents",
+       x = "Words") +
+  theme_classic()
+```
+
+3. Dunlap Parents  
+```{r echo=FALSE, message=FALSE}
+###
+DunlapParents <- read.delim("Dunlap Parents Group 3-5-22.txt")
+# DunlapParents <- gsub('[[:digit:]]+', '', DunlapParents$X1)
+DunlapParents <- as.data.frame(DunlapParents)
+DunlapParents <- summarise(DunlapParents, Transcrip = paste(DunlapParents, collapse = ""))
+
+# sapply(str_extract_all(DunlapParents$Transcrip, "\\b[A-Z]+\\b"), paste, collapse= ' ')
+DunlapParents <- gsub("FEMALE", "Female", DunlapParents)
+DunlapParents <- gsub("MALE", "Male", DunlapParents)
+
+DunlapParents <- gsub("(?=(FACILITATOR|Female SPEAKER|Male SPEAKER))", "@ ", DunlapParents, perl = TRUE)
+
+matches <- gregexpr("@.[^@]*", DunlapParents)
+DunlapParents <- regmatches(DunlapParents, matches)
+DunlapParents <- unlist(DunlapParents)
+
+DunlapParents <- data.frame(Role = str_extract(DunlapParents, "@.*[a-z|A-Z].*:"), Transcript = str_extract(DunlapParents, ":.*[a-z|A-Z].*") )
+
+DunlapParents$Role <- gsub("@ ", "", DunlapParents$Role)
+DunlapParents$Role <- gsub(":", "", DunlapParents$Role)
+DunlapParents$Transcript <- gsub(":  ", "", DunlapParents$Transcript)
+DunlapParents$Transcript <- stripWhitespace(DunlapParents$Transcript)
+
+###
+tidy_DunlapParents <- DunlapParents %>%
+  # filter(Role != "FACILITATOR") %>%
+  mutate(ID = row_number()) %>%
+  unnest_tokens(word, Transcript) %>%
+  anti_join(stop_words)
+
+###
+sentiment_DunlapParents <- tidy_DunlapParents %>%
+  inner_join(get_sentiments("nrc"))
+
+sentiment_DunlapParents2 <- sentiment_DunlapParents %>%
+  count(sentiment) %>%
+  arrange(desc(n))
+
+# sentiment_DunlapParents2 <- sentiment_DunlapParents %>%
+#   filter(sentiment %in% c("positive", "negative"))
+
+word_counts <- sentiment_DunlapParents %>%
+  count(word, sentiment) %>%
+  group_by(sentiment) %>%
+  # top_n(10, n) %>%
+  ungroup() %>%
+  mutate(word2 = fct_reorder(word, n))
+
+ggplot(word_counts, aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Sentiment Word Counts",
+       subtitle = "2022 Dunlap Parents",
+       x = "Words") +
+  theme_classic()
+```
+
+4. Farragut Parents  
+```{r echo=FALSE, message=FALSE}
+###
+FarragutParents <- read.delim("Farragut parents.txt")
+# FarragutParents <- gsub('[[:digit:]]+', '', FarragutParents$X1)
+FarragutParents <- as.data.frame(FarragutParents)
+FarragutParents <- summarise(FarragutParents, Transcrip = paste(FarragutParents, collapse = ""))
+
+# sapply(str_extract_all(FarragutParents$Transcrip, "\\b[A-Z]+\\b"), paste, collapse= ' ')
+FarragutParents <- gsub("FEMALE", "Female", FarragutParents)
+FarragutParents <- gsub("MALE", "Male", FarragutParents)
+
+FarragutParents <- gsub("(?=(THE FACILITATOR|Female PARTICIPANT|Male PARTICIPANT))", "@ ", FarragutParents, perl = TRUE)
+
+matches <- gregexpr("@.[^@]*", FarragutParents)
+FarragutParents <- regmatches(FarragutParents, matches)
+FarragutParents <- unlist(FarragutParents)
+
+FarragutParents <- data.frame(Role = str_extract(FarragutParents, "@.*[a-z|A-Z].*:"), Transcript = str_extract(FarragutParents, ":.*[a-z|A-Z].*") )
+
+FarragutParents$Role <- gsub("@ ", "", FarragutParents$Role)
+FarragutParents$Role <- gsub(":", "", FarragutParents$Role)
+FarragutParents$Transcript <- gsub(":  ", "", FarragutParents$Transcript)
+FarragutParents$Transcript <- stripWhitespace(FarragutParents$Transcript)
+
+###
+tidy_FarragutParents <- FarragutParents %>%
+  # filter(Role != "FACILITATOR") %>%
+  mutate(ID = row_number()) %>%
+  unnest_tokens(word, Transcript) %>%
+  anti_join(stop_words)
+
+###
+sentiment_FarragutParents <- tidy_FarragutParents %>%
+  inner_join(get_sentiments("nrc"))
+
+sentiment_FarragutParents2 <- sentiment_FarragutParents %>%
+  count(sentiment) %>%
+  arrange(desc(n))
+
+# sentiment_FarragutParents2 <- sentiment_FarragutParents %>%
+#   filter(sentiment %in% c("positive", "negative"))
+
+word_counts <- sentiment_FarragutParents %>%
+  count(word, sentiment) %>%
+  group_by(sentiment) %>%
+  # top_n(10, n) %>%
+  ungroup() %>%
+  mutate(word2 = fct_reorder(word, n))
+
+ggplot(word_counts, aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Sentiment Word Counts",
+       subtitle = "2022 Farragut Parents",
+       x = "Words") +
+  theme_classic()
+```
+
+5. Logan Parents  
+```{r echo=FALSE, message=FALSE}
+###
+LoganParents <- read.delim("Logan parents.txt")
+# LoganParents <- gsub('[[:digit:]]+', '', LoganParents$X1)
+LoganParents <- as.data.frame(LoganParents)
+LoganParents <- summarise(LoganParents, Transcrip = paste(LoganParents, collapse = ""))
+
+# sapply(str_extract_all(LoganParents$Transcrip, "\\b[A-Z]+\\b"), paste, collapse= ' ')
+LoganParents <- gsub("FEMALE", "Female", LoganParents)
+LoganParents <- gsub("MALE", "Male", LoganParents)
+
+LoganParents <- gsub("(?=(STUDENT INTERN|THE FACILITATOR|Female PARTICIPANT|Male PARTICIPANT))", "@ ", LoganParents, perl = TRUE)
+
+matches <- gregexpr("@.[^@]*", LoganParents)
+LoganParents <- regmatches(LoganParents, matches)
+LoganParents <- unlist(LoganParents)
+
+LoganParents <- data.frame(Role = str_extract(LoganParents, "@.*[a-z|A-Z].*:"), Transcript = str_extract(LoganParents, ":.*[a-z|A-Z].*") )
+
+LoganParents$Role <- gsub("@ ", "", LoganParents$Role)
+LoganParents$Role <- gsub(":", "", LoganParents$Role)
+LoganParents$Transcript <- gsub(":  ", "", LoganParents$Transcript)
+LoganParents$Transcript <- stripWhitespace(LoganParents$Transcript)
+
+###
+tidy_LoganParents <- LoganParents %>%
+  # filter(Role != "FACILITATOR") %>%
+  mutate(ID = row_number()) %>%
+  unnest_tokens(word, Transcript) %>%
+  anti_join(stop_words)
+
+###
+sentiment_LoganParents <- tidy_LoganParents %>%
+  inner_join(get_sentiments("nrc"))
+
+sentiment_LoganParents2 <- sentiment_LoganParents %>%
+  count(sentiment) %>%
+  arrange(desc(n))
+
+# sentiment_LoganParents2 <- sentiment_LoganParents %>%
+#   filter(sentiment %in% c("positive", "negative"))
+
+word_counts <- sentiment_LoganParents %>%
+  count(word, sentiment) %>%
+  group_by(sentiment) %>%
+  # top_n(10, n) %>%
+  ungroup() %>%
+  mutate(word2 = fct_reorder(word, n))
+
+ggplot(word_counts, aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Sentiment Word Counts",
+       subtitle = "2022 Logan Parents",
+       x = "Words") +
+  theme_classic()
+```
+
+6. Riverside Parents  
+```{r echo=FALSE, message=FALSE}
+###
+RiversideParents <- read.delim("Riverside Parents Focus Group 2022.txt")
+# RiversideParents <- gsub('[[:digit:]]+', '', RiversideParents$X1)
+RiversideParents <- as.data.frame(RiversideParents)
+RiversideParents <- summarise(RiversideParents, Transcrip = paste(RiversideParents, collapse = ""))
+
+# sapply(str_extract_all(RiversideParents$Transcrip, "\\b[A-Z]+\\b"), paste, collapse= ' ')
+RiversideParents <- gsub("FEMALE", "Female", RiversideParents)
+RiversideParents <- gsub("MALE", "Male", RiversideParents)
+
+RiversideParents <- gsub("(?=(FACILITATOR|Female SPEAKER|Male SPEAKER))", "@ ", RiversideParents, perl = TRUE)
+
+matches <- gregexpr("@.[^@]*", RiversideParents)
+RiversideParents <- regmatches(RiversideParents, matches)
+RiversideParents <- unlist(RiversideParents)
+
+RiversideParents <- data.frame(Role = str_extract(RiversideParents, "@.*[a-z|A-Z].*:"), Transcript = str_extract(RiversideParents, ":.*[a-z|A-Z].*") )
+
+RiversideParents$Role <- gsub("@ ", "", RiversideParents$Role)
+RiversideParents$Role <- gsub(":", "", RiversideParents$Role)
+RiversideParents$Transcript <- gsub(":  ", "", RiversideParents$Transcript)
+RiversideParents$Transcript <- stripWhitespace(RiversideParents$Transcript)
+
+###
+tidy_RiversideParents <- RiversideParents %>%
+  # filter(Role != "FACILITATOR") %>%
+  mutate(ID = row_number()) %>%
+  unnest_tokens(word, Transcript) %>%
+  anti_join(stop_words)
+
+###
+sentiment_RiversideParents <- tidy_RiversideParents %>%
+  inner_join(get_sentiments("nrc"))
+
+sentiment_RiversideParents2 <- sentiment_RiversideParents %>%
+  count(sentiment) %>%
+  arrange(desc(n))
+
+# sentiment_RiversideParents2 <- sentiment_RiversideParents %>%
+#   filter(sentiment %in% c("positive", "negative"))
+
+word_counts <- sentiment_RiversideParents %>%
+  count(word, sentiment) %>%
+  group_by(sentiment) %>%
+  # top_n(10, n) %>%
+  ungroup() %>%
+  mutate(word2 = fct_reorder(word, n))
+
+ggplot(word_counts, aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Sentiment Word Counts",
+       subtitle = "2022 Riverside Parents",
+       x = "Words") +
+  theme_classic()
+```
+
+7. Scotch Grove Parents  
+```{r echo=FALSE, message=FALSE}
+###
+ScotchGroveParents <- read.delim("Scotch Grove Parents Focus Group 2022.txt")
+# ScotchGroveParents <- gsub('[[:digit:]]+', '', ScotchGroveParents$X1)
+ScotchGroveParents <- as.data.frame(ScotchGroveParents)
+ScotchGroveParents <- summarise(ScotchGroveParents, Transcrip = paste(ScotchGroveParents, collapse = ""))
+
+# sapply(str_extract_all(ScotchGroveParents$Transcrip, "\\b[A-Z]+\\b"), paste, collapse= ' ')
+ScotchGroveParents <- gsub("FEMALE", "Female", ScotchGroveParents)
+ScotchGroveParents <- gsub("MALE", "Male", ScotchGroveParents)
+
+ScotchGroveParents <- gsub("(?=(FACILITATOR|Female SPEAKER|Male SPEAKER))", "@ ", ScotchGroveParents, perl = TRUE)
+
+matches <- gregexpr("@.[^@]*", ScotchGroveParents)
+ScotchGroveParents <- regmatches(ScotchGroveParents, matches)
+ScotchGroveParents <- unlist(ScotchGroveParents)
+
+ScotchGroveParents <- data.frame(Role = str_extract(ScotchGroveParents, "@.*[a-z|A-Z].*:"), Transcript = str_extract(ScotchGroveParents, ":.*[a-z|A-Z].*") )
+
+ScotchGroveParents$Role <- gsub("@ ", "", ScotchGroveParents$Role)
+ScotchGroveParents$Role <- gsub(":", "", ScotchGroveParents$Role)
+ScotchGroveParents$Transcript <- gsub(":  ", "", ScotchGroveParents$Transcript)
+ScotchGroveParents$Transcript <- stripWhitespace(ScotchGroveParents$Transcript)
+
+###
+tidy_ScotchGroveParents <- ScotchGroveParents %>%
+  # filter(Role != "FACILITATOR") %>%
+  mutate(ID = row_number()) %>%
+  unnest_tokens(word, Transcript) %>%
+  anti_join(stop_words)
+
+###
+sentiment_ScotchGroveParents <- tidy_ScotchGroveParents %>%
+  inner_join(get_sentiments("nrc"))
+
+sentiment_ScotchGroveParents2 <- sentiment_ScotchGroveParents %>%
+  count(sentiment) %>%
+  arrange(desc(n))
+
+# sentiment_ScotchGroveParents2 <- sentiment_ScotchGroveParents %>%
+#   filter(sentiment %in% c("positive", "negative"))
+
+word_counts <- sentiment_ScotchGroveParents %>%
+  count(word, sentiment) %>%
+  group_by(sentiment) %>%
+  # top_n(10, n) %>%
+  ungroup() %>%
+  mutate(word2 = fct_reorder(word, n))
+
+ggplot(word_counts, aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Sentiment Word Counts",
+       subtitle = "2022 Scotch Grove Parents",
+       x = "Words") +
+  theme_classic()
+```
+
+8. Shell Rock Parents  
+```{r echo=FALSE, message=FALSE}
+###
+ShellRockParents <- read.delim("Shell Rock Parents.txt")
+# ShellRockParents <- gsub('[[:digit:]]+', '', ShellRockParents$X1)
+ShellRockParents <- as.data.frame(ShellRockParents)
+ShellRockParents <- summarise(ShellRockParents, Transcrip = paste(ShellRockParents, collapse = ""))
+
+# sapply(str_extract_all(ShellRockParents$Transcrip, "\\b[A-Z]+\\b"), paste, collapse= ' ')
+ShellRockParents <- gsub("FEMALE", "Female", ShellRockParents)
+ShellRockParents <- gsub("MALE", "Male", ShellRockParents)
+
+ShellRockParents <- gsub("(?=(THE FACILITATOR|Female PARTICIPANT|Male PARTICIPANT))", "@ ", ShellRockParents, perl = TRUE)
+
+matches <- gregexpr("@.[^@]*", ShellRockParents)
+ShellRockParents <- regmatches(ShellRockParents, matches)
+ShellRockParents <- unlist(ShellRockParents)
+
+ShellRockParents <- data.frame(Role = str_extract(ShellRockParents, "@.*[a-z|A-Z].*:"), Transcript = str_extract(ShellRockParents, ":.*[a-z|A-Z].*") )
+
+ShellRockParents$Role <- gsub("@ ", "", ShellRockParents$Role)
+ShellRockParents$Role <- gsub(":", "", ShellRockParents$Role)
+ShellRockParents$Transcript <- gsub(":  ", "", ShellRockParents$Transcript)
+ShellRockParents$Transcript <- stripWhitespace(ShellRockParents$Transcript)
+
+###
+tidy_ShellRockParents <- ShellRockParents %>%
+  # filter(Role != "FACILITATOR") %>%
+  mutate(ID = row_number()) %>%
+  unnest_tokens(word, Transcript) %>%
+  anti_join(stop_words)
+
+###
+sentiment_ShellRockParents <- tidy_ShellRockParents %>%
+  inner_join(get_sentiments("nrc"))
+
+sentiment_ShellRockParents2 <- sentiment_ShellRockParents %>%
+  count(sentiment) %>%
+  arrange(desc(n))
+
+# sentiment_ShellRockParents2 <- sentiment_ShellRockParents %>%
+#   filter(sentiment %in% c("positive", "negative"))
+
+word_counts <- sentiment_ShellRockParents %>%
+  count(word, sentiment) %>%
+  group_by(sentiment) %>%
+  # top_n(10, n) %>%
+  ungroup() %>%
+  mutate(word2 = fct_reorder(word, n))
+
+ggplot(word_counts, aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Sentiment Word Counts",
+       subtitle = "2022 Shell Rock Parents",
+       x = "Words") +
+  theme_classic()
+```
+
+9. Stanton Parents  
+```{r echo=FALSE, message=FALSE}
+###
+StantonParents <- read.delim("Stanton Parents.txt")
+# StantonParents <- gsub('[[:digit:]]+', '', StantonParents$X1)
+StantonParents <- as.data.frame(StantonParents)
+StantonParents <- summarise(StantonParents, Transcrip = paste(StantonParents, collapse = ""))
+
+# sapply(str_extract_all(StantonParents$Transcrip, "\\b[A-Z]+\\b"), paste, collapse= ' ')
+StantonParents <- gsub("FEMALE", "Female", StantonParents)
+StantonParents <- gsub("MALE", "Male", StantonParents)
+
+StantonParents <- gsub("(?=(THE FACILITATOR|Female PARTICIPANT|Male PARTICIPANT))", "@ ", StantonParents, perl = TRUE)
+
+matches <- gregexpr("@.[^@]*", StantonParents)
+StantonParents <- regmatches(StantonParents, matches)
+StantonParents <- unlist(StantonParents)
+
+StantonParents <- data.frame(Role = str_extract(StantonParents, "@.*[a-z|A-Z].*:"), Transcript = str_extract(StantonParents, ":.*[a-z|A-Z].*") )
+
+StantonParents$Role <- gsub("@ ", "", StantonParents$Role)
+StantonParents$Role <- gsub(":", "", StantonParents$Role)
+StantonParents$Transcript <- gsub(":  ", "", StantonParents$Transcript)
+StantonParents$Transcript <- stripWhitespace(StantonParents$Transcript)
+
+###
+tidy_StantonParents <- StantonParents %>%
+  # filter(Role != "FACILITATOR") %>%
+  mutate(ID = row_number()) %>%
+  unnest_tokens(word, Transcript) %>%
+  anti_join(stop_words)
+
+###
+sentiment_StantonParents <- tidy_StantonParents %>%
+  inner_join(get_sentiments("nrc"))
+
+sentiment_StantonParents2 <- sentiment_StantonParents %>%
+  count(sentiment) %>%
+  arrange(desc(n))
+
+# sentiment_StantonParents2 <- sentiment_StantonParents %>%
+#   filter(sentiment %in% c("positive", "negative"))
+
+word_counts <- sentiment_StantonParents %>%
+  count(word, sentiment) %>%
+  group_by(sentiment) %>%
+  # top_n(10, n) %>%
+  ungroup() %>%
+  mutate(word2 = fct_reorder(word, n))
+
+ggplot(word_counts, aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Sentiment Word Counts",
+       subtitle = "2022 Stanton Parents",
+       x = "Words") +
+  theme_classic()
+```
+
+10. West Branch Parents  
+```{r echo=FALSE, message=FALSE}
+###
+WestBranchParents <- read.delim("West Branch Parents Focus Group 2022.txt")
+# WestBranchParents <- gsub('[[:digit:]]+', '', WestBranchParents$X1)
+WestBranchParents <- as.data.frame(WestBranchParents)
+WestBranchParents <- summarise(WestBranchParents, Transcrip = paste(WestBranchParents, collapse = ""))
+
+# sapply(str_extract_all(WestBranchParents$Transcrip, "\\b[A-Z]+\\b"), paste, collapse= ' ')
+WestBranchParents <- gsub("FEMALE", "Female", WestBranchParents)
+WestBranchParents <- gsub("MALE", "Male", WestBranchParents)
+
+WestBranchParents <- gsub("(?=(FACILITATOR|Female SPEAKER|Male SPEAKER))", "@ ", WestBranchParents, perl = TRUE)
+
+matches <- gregexpr("@.[^@]*", WestBranchParents)
+WestBranchParents <- regmatches(WestBranchParents, matches)
+WestBranchParents <- unlist(WestBranchParents)
+
+WestBranchParents <- data.frame(Role = str_extract(WestBranchParents, "@.*[a-z|A-Z].*:"), Transcript = str_extract(WestBranchParents, ":.*[a-z|A-Z].*") )
+
+WestBranchParents$Role <- gsub("@ ", "", WestBranchParents$Role)
+WestBranchParents$Role <- gsub(":", "", WestBranchParents$Role)
+WestBranchParents$Transcript <- gsub(":  ", "", WestBranchParents$Transcript)
+WestBranchParents$Transcript <- stripWhitespace(WestBranchParents$Transcript)
+
+###
+tidy_WestBranchParents <- WestBranchParents %>%
+  # filter(Role != "FACILITATOR") %>%
+  mutate(ID = row_number()) %>%
+  unnest_tokens(word, Transcript) %>%
+  anti_join(stop_words)
+
+###
+sentiment_WestBranchParents <- tidy_WestBranchParents %>%
+  inner_join(get_sentiments("nrc"))
+
+sentiment_WestBranchParents2 <- sentiment_WestBranchParents %>%
+  count(sentiment) %>%
+  arrange(desc(n))
+
+# sentiment_WestBranchParents2 <- sentiment_WestBranchParents %>%
+#   filter(sentiment %in% c("positive", "negative"))
+
+word_counts <- sentiment_WestBranchParents %>%
+  count(word, sentiment) %>%
+  group_by(sentiment) %>%
+  # top_n(10, n) %>%
+  ungroup() %>%
+  mutate(word2 = fct_reorder(word, n))
+
+ggplot(word_counts, aes(x = sentiment, y = n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  labs(title = "Sentiment Word Counts",
+       subtitle = "2022 West Branch Parents",
+       x = "Words") +
+  theme_classic()
+```
